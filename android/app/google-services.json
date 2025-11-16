@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "561896548796",
+    "project_id": "territory-capture-app-3ed1d",
+    "storage_bucket": "territory-capture-app-3ed1d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561896548796:android:97a3985a6021743691a3b9",
+        "android_client_info": {
+          "package_name": "com.example.territory_capture_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561896548796-d3d5dulivh3cg6a8chm975oa8689a1k6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlISaeJxOMMK7v-XYOOD9FJPXWR2vT7KQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561896548796-d3d5dulivh3cg6a8chm975oa8689a1k6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
