@@ -8,6 +8,7 @@ import 'package:territory_capture_app/domain/entities/lat_lng_timestamp.dart';
 import 'package:territory_capture_app/domain/entities/territory.dart';
 import 'package:territory_capture_app/domain/usecases/save_territory.dart';
 import 'package:territory_capture_app/presentation/controllers/auth_controller.dart';
+import 'package:territory_capture_app/presentation/controllers/territory_list_controller.dart';
 import 'package:territory_capture_app/routes/app_routes.dart';
 
 enum CaptureState { idle, capturing, paused }
@@ -87,34 +88,81 @@ class CaptureController extends GetxController {
 
   Future<void> finishCapture() async {
     if (points.length < 3) {
-      Get.snackbar('Error', 'Need at least 3 points to close polygon');
+      Get.snackbar(
+        'Oops',
+        'Walk at least 3 points to create a territory',
+        backgroundColor: Colors.red.withOpacity(0.8),
+        colorText: Colors.white,
+      );
       return;
     }
 
-    isLoading.value = true;
-    final userId = AuthController.to.currentUser!.uid;
-
-    // Close polygon
-    if (points.isNotEmpty) points.add(points.first);
-
-    final territory = Territory(
-      id: '',
-      userId: userId,
-      createdAt: DateTime.now(),
-      distanceMeters: distance.value,
-      areaSqMeters: area.value,
-      points: points.toList(),
+    // Show full-screen loading
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(strokeWidth: 5, color: Colors.indigo),
+      ),
+      barrierDismissible: false,
     );
 
-    final result = await saveTerritoryUseCase(territory);
-    result.fold(
-      (failure) => Get.snackbar('Error', 'Failed to save territory'),
-      (_) {
-        Get.snackbar('Success', 'Territory saved!');
-        Get.offAllNamed(AppRoutes.list);
-      },
-    );
-    isLoading.value = false;
+    try {
+      final userId = AuthController.to.currentUser!.uid;
+
+      // Close the polygon
+      if (points.isNotEmpty && points.first != points.last) {
+        points.add(points.first);
+      }
+
+      final territory = Territory(
+        id: '',
+        userId: userId,
+        createdAt: DateTime.now(),
+        distanceMeters: distance.value,
+        areaSqMeters: area.value,
+        points: points.toList(),
+      );
+
+      final result = await saveTerritoryUseCase(territory);
+
+      await result.fold(
+        (failure) async {
+          Get.back(); // close loading
+          Get.snackbar(
+            'Failed',
+            'Could not save territory. Check internet.',
+            backgroundColor: Colors.red.withOpacity(0.9),
+            colorText: Colors.white,
+          );
+        },
+        (_) async {
+          Get.back(); // close loading
+          Get.snackbar(
+            'Success!',
+            'Territory captured and saved',
+            backgroundColor: Colors.green.withOpacity(0.9),
+            colorText: Colors.white,
+            duration: const Duration(seconds: 2),
+          );
+
+          // INSTANT LIST UPDATE
+          await Future.delayed(const Duration(milliseconds: 300));
+          Get.offAllNamed(AppRoutes.list);
+
+          // Force refresh list (guaranteed to show new territory)
+          if (Get.isRegistered<TerritoryListController>()) {
+            Get.find<TerritoryListController>().refresh();
+          }
+        },
+      );
+    } catch (e) {
+      Get.back();
+      Get.snackbar(
+        'Error',
+        'Something went wrong',
+        backgroundColor: Colors.red.withOpacity(0.9),
+        colorText: Colors.white,
+      );
+    }
   }
 
   void _updateCalculations() {

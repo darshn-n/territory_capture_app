@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:territory_capture_app/core/utils/location_helper.dart';
 import 'package:territory_capture_app/presentation/controllers/capture_controller.dart';
-import 'package:territory_capture_app/presentation/widgets/control_button.dart';
 import 'package:territory_capture_app/routes/app_routes.dart';
 
 class CapturePage extends StatelessWidget {
@@ -52,25 +51,37 @@ class CapturePage extends StatelessWidget {
           // ... stats card ...
           Positioned(
             bottom: 20,
-            left: 20,
-            right: 20,
+            left: 16,
+            right: 16,
             child: Card(
+              elevation: 8,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    // Distance & Area
                     Obx(
                       () => Text(
                         'Distance: ${controller.distance.value.toStringAsFixed(1)} m',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
+                    const SizedBox(height: 4),
                     Obx(
                       () => Text(
                         'Area: ${controller.area.value.toStringAsFixed(1)} m²',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 16),
                     _buildControls(controller),
                   ],
                 ),
@@ -101,57 +112,74 @@ class CapturePage extends StatelessWidget {
     return Obx(() {
       switch (c.state.value) {
         case CaptureState.idle:
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ControlButton(
-                label: 'Start',
-                color: Colors.green,
-                onPressed: c.startCapture,
+          return SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: c.startCapture,
+              icon: const Icon(Icons.play_arrow, size: 28),
+              label: const Text(
+                'START CAPTURE',
+                style: TextStyle(fontSize: 18),
               ),
-            ],
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+            ),
           );
 
         case CaptureState.capturing:
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ControlButton(
-                label: 'Pause',
-                color: Colors.orange,
-                onPressed: c.pauseCapture,
-              ),
-              ControlButton(
-                label: 'Finish',
-                color: Colors.blue,
-                onPressed: c.finishCapture,
-              ),
-              ControlButton(
-                label: 'Discard',
-                color: Colors.red,
-                onPressed: c.discard,
-              ),
-            ],
-          );
-
         case CaptureState.paused:
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          return Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            alignment: WrapAlignment.center,
             children: [
-              ControlButton(
-                label: 'Resume',
-                color: Colors.green,
-                onPressed: c.resumeCapture,
+              ElevatedButton.icon(
+                onPressed: c.state.value == CaptureState.capturing
+                    ? c.pauseCapture
+                    : c.resumeCapture,
+                icon: Icon(
+                  c.state.value == CaptureState.capturing
+                      ? Icons.pause
+                      : Icons.play_arrow,
+                ),
+                label: Text(
+                  c.state.value == CaptureState.capturing ? 'PAUSE' : 'RESUME',
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: c.state.value == CaptureState.capturing
+                      ? Colors.orange
+                      : Colors.green,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 14,
+                  ),
+                ),
               ),
-              ControlButton(
-                label: 'Finish',
-                color: Colors.blue,
+              ElevatedButton.icon(
                 onPressed: c.finishCapture,
+                icon: const Icon(Icons.flag),
+                label: const Text('FINISH'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 14,
+                  ),
+                ),
               ),
-              ControlButton(
-                label: 'Discard',
-                color: Colors.red,
+              ElevatedButton.icon(
                 onPressed: c.discard,
+                icon: const Icon(Icons.delete),
+                label: const Text('DISCARD'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 14,
+                  ),
+                ),
               ),
             ],
           );
