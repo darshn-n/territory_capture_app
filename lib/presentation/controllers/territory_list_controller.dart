@@ -28,7 +28,6 @@ class TerritoryListController extends GetxController {
     });
   }
 
-  // ← THIS IS THE KEY METHOD
   void refresh() {
     isLoading.value = true;
     loadTerritories();

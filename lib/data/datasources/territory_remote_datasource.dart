@@ -5,7 +5,7 @@ import 'package:territory_capture_app/data/models/territory_model.dart';
 abstract class TerritoryRemoteDataSource {
   Future<String> saveTerritory(TerritoryModel territory);
   Stream<List<TerritoryModel>> getUserTerritories(String userId);
-  Future<TerritoryModel> getTerritory(String id); // ← FIXED
+  Future<TerritoryModel> getTerritory(String id);
 }
 
 class TerritoryRemoteDataSourceImpl implements TerritoryRemoteDataSource {

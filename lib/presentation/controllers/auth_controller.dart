@@ -30,7 +30,7 @@ class AuthController extends GetxController {
       );
 
       await FirebaseAuth.instance.signInWithCredential(credential);
-      Get.offAllNamed(AppRoutes.capture); // ← FIXED: was .main
+      Get.offAllNamed(AppRoutes.capture);
     } catch (e) {
       Get.snackbar('Error', 'Google sign-in failed: $e');
     } finally {

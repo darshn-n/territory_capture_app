@@ -19,8 +19,25 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // App logo / title
-              Icon(Icons.public, size: 100, color: Colors.deepPurple),
+              Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.public,
+                  size: 160,
+                  color: Colors.deepPurple,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 24),
               Text(
                 'Territory Capture App',
@@ -31,7 +48,7 @@ class LoginPage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Capture real-world territories',
+                'Capture territories now!',
                 style: Theme.of(
                   context,
                 ).textTheme.titleMedium?.copyWith(color: Colors.grey[600]),
@@ -52,8 +69,8 @@ class LoginPage extends StatelessWidget {
                             elevation: 2,
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              side: BorderSide(color: Colors.grey[300]!),
+                              borderRadius: BorderRadius.circular(30),
+                              side: BorderSide(color: Colors.black54, width: 1),
                             ),
                           ),
                           icon: Icon(FontAwesomeIcons.google),

@@ -13,27 +13,26 @@ import 'package:territory_capture_app/presentation/controllers/territory_list_co
 
 class DependencyInjection {
   static void init() {
-    // Permanent
     Get.put(AuthController(), permanent: true);
 
     // Data sources
     Get.lazyPut<TerritoryRemoteDataSource>(
       () => TerritoryRemoteDataSourceImpl(FirebaseFirestore.instance),
-      fenix: true, // ← RECREATE ON DEMAND
+      fenix: true,
     );
 
-    // Repositories
+    // Repos
     Get.lazyPut<AbstractTerritoryRepository>(
       () => TerritoryRepositoryImpl(Get.find<TerritoryRemoteDataSource>()),
       fenix: true,
     );
 
-    // Use cases — MUST BE fenix: true
+    // Use case
     Get.lazyPut(() => SaveTerritoryUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetUserTerritoriesUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetTerritoryUseCase(Get.find()), fenix: true);
 
-    // Controllers — lazy + fenix
+    // Controllers
     Get.lazyPut(() => CaptureController(), fenix: true);
     Get.lazyPut(() => TerritoryListController(), fenix: true);
     Get.lazyPut(() => TerritoryDetailController(), fenix: true);

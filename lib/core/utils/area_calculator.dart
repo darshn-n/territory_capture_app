@@ -7,7 +7,7 @@ class AreaCalculator {
     if (points.length < 3) return 0.0;
 
     double area = 0.0;
-    final radius = 6371000; // Earth radius in meters
+    final radius = 6371000;
 
     for (int i = 0; i < points.length; i++) {
       final p1 = points[i];

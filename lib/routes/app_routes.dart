@@ -15,11 +15,10 @@ class AppRoutes {
   static const String splash = '/splash';
   static const String login = '/login';
   static const String capture = '/capture';
-  static const String list = '/list'; // ← ADDED
-  static const String detail = '/detail'; // ← ADDED
+  static const String list = '/list';
+  static const String detail = '/detail';
   static const String permissionDenied = '/permission-denied';
 
-  // Full route with param
   static String detailWithId(String id) => '$detail/$id';
 
   static final routes = [

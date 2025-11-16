@@ -49,7 +49,8 @@ class CapturePage extends StatelessWidget {
               },
             );
           }),
-          // ... stats card ...
+
+          // Cards with stats and controls
           Positioned(
             bottom: 24,
             left: 16,

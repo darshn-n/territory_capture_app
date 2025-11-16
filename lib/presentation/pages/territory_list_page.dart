@@ -52,7 +52,6 @@ class TerritoryListPage extends StatelessWidget {
         }
 
         return RefreshIndicator(
-          // Pull-to-refresh bonus
           onRefresh: () async => controller.loadTerritories(),
           child: ListView.builder(
             itemCount: controller.territories.length,

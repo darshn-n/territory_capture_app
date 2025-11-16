@@ -91,13 +91,12 @@ class CaptureController extends GetxController {
       Get.snackbar(
         'Oops',
         'Walk at least 3 points to create a territory',
-        backgroundColor: Colors.red.withOpacity(0.8),
+        backgroundColor: Colors.red.shade400,
         colorText: Colors.white,
       );
       return;
     }
 
-    // Show full-screen loading
     Get.dialog(
       const Center(
         child: CircularProgressIndicator(strokeWidth: 5, color: Colors.indigo),
@@ -108,7 +107,7 @@ class CaptureController extends GetxController {
     try {
       final userId = AuthController.to.currentUser!.uid;
 
-      // Close the polygon
+      // Ensure polygon is closed
       if (points.isNotEmpty && points.first != points.last) {
         points.add(points.first);
       }
@@ -126,7 +125,7 @@ class CaptureController extends GetxController {
 
       await result.fold(
         (failure) async {
-          Get.back(); // close loading
+          Get.back();
           Get.snackbar(
             'Failed',
             'Could not save territory. Check internet.',
@@ -135,7 +134,7 @@ class CaptureController extends GetxController {
           );
         },
         (_) async {
-          Get.back(); // close loading
+          Get.back();
           Get.snackbar(
             'Success!',
             'Territory captured and saved',
@@ -144,11 +143,9 @@ class CaptureController extends GetxController {
             duration: const Duration(seconds: 2),
           );
 
-          // INSTANT LIST UPDATE
           await Future.delayed(const Duration(milliseconds: 300));
           Get.offAllNamed(AppRoutes.list);
 
-          // Force refresh list (guaranteed to show new territory)
           if (Get.isRegistered<TerritoryListController>()) {
             Get.find<TerritoryListController>().refresh();
           }
