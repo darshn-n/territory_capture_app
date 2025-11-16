@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:territory_capture_app/core/utils/location_helper.dart';
 import 'package:territory_capture_app/presentation/controllers/capture_controller.dart';
@@ -50,38 +51,46 @@ class CapturePage extends StatelessWidget {
           }),
           // ... stats card ...
           Positioned(
-            bottom: 20,
+            bottom: 24,
             left: 16,
             right: 16,
             child: Card(
-              elevation: 8,
+              elevation: 12,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(20),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    colors: [Colors.white, Colors.deepPurple[50]!],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
                 child: Column(
                   children: [
                     Obx(
                       () => Text(
                         'Distance: ${controller.distance.value.toStringAsFixed(1)} m',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                        style: GoogleFonts.lato(
+                          fontSize: 20,
+                          color: Colors.black,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 8),
                     Obx(
                       () => Text(
                         'Area: ${controller.area.value.toStringAsFixed(1)} m²',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                        style: GoogleFonts.lato(
+                          fontSize: 20,
+                          color: Colors.black,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 20),
                     _buildControls(controller),
                   ],
                 ),
@@ -117,12 +126,15 @@ class CapturePage extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: c.startCapture,
               icon: const Icon(Icons.play_arrow, size: 28),
-              label: const Text(
+              label: Text(
                 'START CAPTURE',
-                style: TextStyle(fontSize: 18),
+                style: GoogleFonts.lato(
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
+                backgroundColor: Colors.greenAccent[400],
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
             ),
@@ -172,7 +184,10 @@ class CapturePage extends StatelessWidget {
               ElevatedButton.icon(
                 onPressed: c.discard,
                 icon: const Icon(Icons.delete),
-                label: const Text('DISCARD'),
+                label: const Text(
+                  'DISCARD',
+                  style: TextStyle(fontWeight: FontWeight.normal),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   padding: const EdgeInsets.symmetric(

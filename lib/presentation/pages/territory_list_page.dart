@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:territory_capture_app/presentation/controllers/auth_controller.dart';
 import 'package:territory_capture_app/presentation/controllers/territory_list_controller.dart';
 import 'package:territory_capture_app/presentation/widgets/territory_list_tile.dart';
 import 'package:territory_capture_app/routes/app_routes.dart';
@@ -16,8 +18,9 @@ class TerritoryListPage extends StatelessWidget {
         title: const Text('My Territories'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.map),
-            onPressed: () => Get.toNamed('/capture'),
+            icon: const Icon(Icons.logout, color: Colors.white),
+            tooltip: 'Sign Out',
+            onPressed: () => AuthController.to.signOut(),
           ),
         ],
       ),
@@ -33,9 +36,9 @@ class TerritoryListPage extends StatelessWidget {
               children: [
                 const Icon(Icons.map_outlined, size: 80, color: Colors.grey),
                 const SizedBox(height: 16),
-                const Text(
+                Text(
                   'No territories yet. Start capturing!',
-                  style: TextStyle(fontSize: 18),
+                  style: GoogleFonts.lato(fontSize: 18),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton.icon(

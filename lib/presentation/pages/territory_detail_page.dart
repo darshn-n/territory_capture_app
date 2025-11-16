@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:territory_capture_app/presentation/controllers/territory_detail_controller.dart';
@@ -67,7 +68,7 @@ class TerritoryDetailPage extends StatelessWidget {
                   children: [
                     Text(
                       'Distance: ${t.distanceMeters.toStringAsFixed(1)} m',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                     ),
                     Text('Area: ${t.areaSqMeters.toStringAsFixed(1)} m²'),
                     Text(

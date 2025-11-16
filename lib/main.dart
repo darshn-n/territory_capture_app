@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:territory_capture_app/injection.dart';
 import 'package:territory_capture_app/routes/app_routes.dart';
 
@@ -21,8 +22,29 @@ class MyApp extends StatelessWidget {
       title: 'Territory Capture',
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Colors.indigo,
-        brightness: Brightness.light,
+        colorScheme: ColorScheme.fromSeed(
+          brightness: Brightness.light,
+          seedColor: Colors.blueGrey,
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.blueAccent.shade200,
+          foregroundColor: Colors.white,
+          elevation: 4,
+          centerTitle: true,
+          titleTextStyle: GoogleFonts.lato(fontSize: 20),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            textStyle: GoogleFonts.lato(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
       ),
       initialRoute: AppRoutes.splash,
       getPages: AppRoutes.routes,

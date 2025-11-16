@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionDeniedPage extends StatelessWidget {
@@ -16,9 +17,12 @@ class PermissionDeniedPage extends StatelessWidget {
             children: [
               const Icon(Icons.location_off, size: 80, color: Colors.red),
               const SizedBox(height: 24),
-              const Text(
+              Text(
                 'Location Permission Required',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: GoogleFonts.lato(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),

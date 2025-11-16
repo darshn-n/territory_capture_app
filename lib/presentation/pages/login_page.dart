@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:territory_capture_app/presentation/controllers/auth_controller.dart';
 
 class LoginPage extends StatelessWidget {
@@ -10,32 +12,58 @@ class LoginPage extends StatelessWidget {
     final auth = AuthController.to;
 
     return Scaffold(
+      backgroundColor: Colors.grey[50],
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.map, size: 80, color: Colors.indigo),
+              // App logo / title
+              Icon(Icons.public, size: 100, color: Colors.deepPurple),
               const SizedBox(height: 24),
-              const Text(
-                'Territory Capture',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              Text(
+                'Territory Capture App',
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepPurple,
+                ),
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 8),
+              Text(
+                'Capture real-world territories',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(color: Colors.grey[600]),
+              ),
+              const SizedBox(height: 64),
+
+              // Official-looking Google Sign-In button
               Obx(
                 () => auth.isLoading.value
-                    ? const CircularProgressIndicator()
-                    : ElevatedButton.icon(
-                        onPressed: auth.signInWithGoogle,
-                        icon: const Icon(Icons.g_mobiledata),
-                        label: const Text('Sign in with Google'),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 12,
+                    ? const CircularProgressIndicator(color: Colors.deepPurple)
+                    : SizedBox(
+                        width: 280,
+                        child: ElevatedButton.icon(
+                          onPressed: auth.signInWithGoogle,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Colors.black87,
+                            elevation: 2,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              side: BorderSide(color: Colors.grey[300]!),
+                            ),
                           ),
-                          textStyle: const TextStyle(fontSize: 18),
+                          icon: Icon(FontAwesomeIcons.google),
+                          label: Padding(
+                            padding: EdgeInsets.only(left: 16),
+                            child: Text(
+                              'Sign in with Google',
+                              style: GoogleFonts.lato(fontSize: 18),
+                            ),
+                          ),
                         ),
                       ),
               ),
